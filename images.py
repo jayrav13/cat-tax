@@ -4,6 +4,7 @@ from lxml import html
 from twilio.rest import TwilioRestClient
 import os
 from datetime import datetime
+from clarifai.client import ClarifaiApi
 
 def send_image():
 	image = Images.query.filter_by(is_sent=0).first()
@@ -16,10 +17,19 @@ def send_image():
 		result = requests.get('http://thecatapi.com/api/images/get', params=parameters)
 		tree = html.document_fromstring(result.text)
 
+		clarifai_api = ClarifaiApi()
+
 		for val in tree.xpath('//images'):
 			for elem in val:
-				db.session.add(Images(elem.xpath('url')[0].text, elem.xpath('id')[0].text, elem.xpath('source_url')[0].text, 0))
-				db.session.commit()
+				try:
+					result = clarifai_api.tag_image_urls(elem.xpath('url')[0].text)
+					total_results = result['results'][0]['result']['tag']['classes']
+					if 'cat' in total_results or 'kitten' in total_results:
+						print "FOUND!"
+						db.session.add(Images(elem.xpath('url')[0].text, elem.xpath('id')[0].text, elem.xpath('source_url')[0].text, 0))
+						db.session.commit()
+				except:
+					pass
 
 		image = Images.query.filter_by(is_sent=0).first()
 
@@ -34,5 +44,5 @@ def send_image():
 
 dt = datetime.now()
 
-if dt.hour >= 14 and dt.hour <= 22:
-	send_image()
+#if dt.hour >= 14 and dt.hour <= 22:
+send_image()
