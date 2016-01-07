@@ -23,6 +23,7 @@ def home():
 
 @app.route('/api/v0.1/message', methods=['GET'])
 def message():
+	db.create_all()
 	if request.values.get('Body', None).strip().lower() == 'register':
 		user = Users.query.filter_by(number=request.values.get('From')).first()
 		if user:
