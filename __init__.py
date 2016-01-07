@@ -16,29 +16,36 @@ assets.register('css_all', css)
 js = Bundle('js/jquery.js', 'js/bootstrap.min.js', 'js/scripts.js', output='get/packed.js')
 assets.register('js_all', js)
 
-@app.route("/", methods=['GET','POST'])
+@app.route("/", methods=['GET'])
 def home():
-	if request.method == 'GET':
-		return render_template('index.html')
-	elif request.method == 'POST':
-		if 'name' not in request.form or 'phone-number' not in request.form:
-			return render_template('index.html', message="Hmm - something went wrong with the form. Try it again!")
-		elif len(request.form['name']) == 0:
-			return render_template('index.html', message="Uh oh! Enter a name!")
-		elif len(request.form['phone-number']) != 12:
-			return render_template('index.html', message="Uh oh! The phone number has to be 12 characters - 10 numbers separated by 2 dashes!")
-		else:
-			user = Users(request.form['name'], request.form['phone-number'], 0)
-			db.session.add(user)
-			db.session.commit()
-			return render_template('index.html', message="")
+	return render_template('index.html')
 
 
 @app.route('/api/v0.1/message', methods=['GET'])
 def message():
-	resp = twilio.twiml.Response()
-	resp.message("Test").media('http://25.media.tumblr.com/tumblr_m4n449Twri1qea9rlo1_400.gif')
-	return str(resp)
+	if request.values.get('Body', None).strip().lower() == 'register':
+		user = User(request.values.get('From'))
+		db.session.add(user)
+		db.session.commit()
+		resp = twilio.twiml.Response()
+		resp.message("Confirmed! Stay tuned for cat pics!")
+		return str(resp)
+	elif request.values.get('Body', None).strip().lower() == 'stop':
+		user = Users.query.filter_by(number=request.values.get('From')).first()
+		if not user:
+			resp = twilio.twiml.Response()
+			resp.message("Hmm - you're not in our system! Want to receive cat pics? Reply with \"register\"")
+			return str(resp)
+		else:
+			user.active = 0
+			db.session.commit()
+			resp = twilio.twiml.Response()
+			resp.message("You won't get any more messages - for now. Reply with \"resume\" to start receiving again.")
+			return str(resp)
+	else:
+		resp = twilio.twiml.Response()
+		resp.message("Sorry - I don't understand that command!")
+		return str(resp)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', debug=True)

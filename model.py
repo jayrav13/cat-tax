@@ -27,14 +27,12 @@ class Users(db.Model):
 	__tablename__ = "users"
 
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.Text)
 	number = db.Column(db.Text)
 	active = db.Column(db.Integer)
 
-	def __init__(self, name, number, active):
-		self.name = name
+	def __init__(self, number, active):
 		self.number = number
-		self.active = active
+		self.active = 1
 
 class Images(db.Model):
 
@@ -44,7 +42,7 @@ class Images(db.Model):
 	url = db.Column(db.Text)
 	image_id = db.Column(db.Text)
 	source = db.Column(db.Text)
-	is_sent = db.Column(db.Text)
+	is_sent = db.Column(db.Integer)
 
 	def __init__(self, url, image_id, source, is_sent):
 		self.url = url
