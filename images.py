@@ -3,7 +3,7 @@ import requests
 from lxml import html
 from twilio.rest import TwilioRestClient
 import os
-import datetime
+from datetime import datetime
 
 def send_image():
 	image = Images.query.filter_by(is_sent=0).first()
@@ -32,4 +32,7 @@ def send_image():
 	image.is_sent = 1
 	db.session.commit()
 
-send_image()
+dt = datetime.now()
+
+if dt.hour >= 9 and dt.hour <= 17:
+	send_image()
