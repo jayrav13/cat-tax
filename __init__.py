@@ -24,9 +24,15 @@ def home():
 @app.route('/api/v0.1/message', methods=['GET'])
 def message():
 	if request.values.get('Body', None).strip().lower() == 'register':
-		user = User(request.values.get('From'))
-		db.session.add(user)
-		db.session.commit()
+		user = Users.query.filter_by(number=request.values.get('From')).first()
+		if user:
+			user.active = 1
+			db.session.commit()
+		else:
+			user = Users(request.values.get('From'))
+			db.session.add(user)
+			db.session.commit()
+
 		resp = twilio.twiml.Response()
 		resp.message("Confirmed! Stay tuned for cat pics!")
 		return str(resp)
@@ -40,7 +46,7 @@ def message():
 			user.active = 0
 			db.session.commit()
 			resp = twilio.twiml.Response()
-			resp.message("You won't get any more messages - for now. Reply with \"resume\" to start receiving again.")
+			resp.message("You won't get any more messages - for now. Reply with \"register\" to start receiving again.")
 			return str(resp)
 	else:
 		resp = twilio.twiml.Response()

@@ -30,7 +30,7 @@ class Users(db.Model):
 	number = db.Column(db.Text)
 	active = db.Column(db.Integer)
 
-	def __init__(self, number, active):
+	def __init__(self, number):
 		self.number = number
 		self.active = 1
 
