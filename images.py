@@ -44,5 +44,5 @@ def send_image():
 
 dt = datetime.now()
 
-#if dt.hour >= 14 and dt.hour <= 22:
-send_image()
+if dt.hour >= 14 and dt.hour <= 22:
+	send_image()
