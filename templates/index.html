@@ -1,0 +1,37 @@
+{% extends 'standard/layout.html' %}
+
+{% block content %}
+
+<div class="col-md-8 col-md-offset-2">
+	<div class="jumbotron">
+		<h2 class="header text-center">Cat Tax <small>Pictures of cats, every hour on the hour</small></h1>
+
+		<p style="text-center">Type in your name and number, and I'll text you pictures of cats.</p>
+		<br />
+		<hr />
+		<br />
+
+		{% if message is defined %}
+			{% if message|length > 0 %}
+			<div id = "message" class="alert alert-danger text-center" role="alert">{{ message }}</div>	
+			{% else %}
+			<div id = "message" class="alert alert-success text-center" role="alert">Successfully joined! Check your texts to confirm.</div>
+			{% endif %}
+		{% endif %}
+
+		<form class="form center-block text-center" action="/" method="POST">
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Cat McKittens">
+			</div>
+			<div class="form-group">
+				<label for="tel">Phone Number</label>
+				<input type="tel" class="form-control" id="tel" name="phone-number" placeholder="123-456-7890">
+			</div>
+			<button type="submit" class="btn btn-primary">Sign up!</button>
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}

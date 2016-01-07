@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <!-- Meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="author" content="Jay Ravaliya" />
+    <meta name="description" content="Cat Tax" />
+    <meta name="keywords"  content="" />
+    <meta name="Resource-type" content="Document" />
+
+    <title>
+	Cat Tax
+    </title>
+
+    <!-- Assets -->
+    {% assets "css_all" %}<link type="text/css" rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %} 
+    {% assets "js_all" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+ 
+  </head>
+
+  <!-- Body -->
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    
+    <!-- Navigation-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Navbar header -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Cat Tax</a>
+            </div>
+            <!-- Collapsible Navbar -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <!-- Navbar left -->
+                <ul class="nav navbar-nav">
+                    <li>
+                    </li>
+                    <li>
+                    </li>
+                </ul>
+           </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <div class="container">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    {% block javascript %}
+    {% endblock %}
+
+
+  </body>
+</html>
