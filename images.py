@@ -33,5 +33,5 @@ def send_image():
 	db.session.commit()
 
 dt = datetime.datetime.now()
-if dt[3] >= 9 and dt[3] <= 17:
+if (dt[3] >= 9 and dt[3] <= 17) or True:
 	send_image()
