@@ -35,9 +35,9 @@ def message():
 			db.session.commit()
 
 		resp = twilio.twiml.Response()
-		resp.message("Confirmed! Stay tuned for cat pics!")
+		resp.message("Confirmed! Stay tuned for cat pics! Text \"pause\" to stop receiving Cat Tax images.")
 		return str(resp)
-	elif request.values.get('Body', None).strip().lower() == 'stop':
+	elif request.values.get('Body', None).strip().lower() == 'pause':
 		user = Users.query.filter_by(number=request.values.get('From')).first()
 		if not user:
 			resp = twilio.twiml.Response()

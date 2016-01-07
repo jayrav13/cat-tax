@@ -21,7 +21,7 @@ def send_image():
 				db.session.add(Images(elem.xpath('url')[0].text, elem.xpath('id')[0].text, elem.xpath('source_url')[0].text, 0))
 				db.session.commit()
 
-		image = Images.query.filter_by(is_set=0).first()
+		image = Images.query.filter_by(is_sent=0).first()
 
 	users = Users.query.filter_by(active=1).all()
 
@@ -32,6 +32,4 @@ def send_image():
 	image.is_sent = 1
 	db.session.commit()
 
-dt = datetime.datetime.now()
-if (dt[3] >= 9 and dt[3] <= 17) or True:
-	send_image()
+send_image()
