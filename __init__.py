@@ -5,7 +5,7 @@ from flask import Flask, make_response, jsonify, request, abort, render_template
 from flask.ext.assets import Environment, Bundle
 import requests
 import twilio.twiml
-
+import datetime
 from model import db, Users, Images
 
 app = Flask(__name__)
@@ -20,6 +20,9 @@ assets.register('js_all', js)
 def home():
 	return render_template('index.html')
 
+@app.route('/date/test', methods=['GET'])
+def datetest():
+	return str(datetime.datetime.now())
 
 @app.route('/api/v0.1/message', methods=['GET'])
 def message():
