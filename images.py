@@ -25,7 +25,6 @@ def send_image():
 					result = clarifai_api.tag_image_urls(elem.xpath('url')[0].text)
 					total_results = result['results'][0]['result']['tag']['classes']
 					if 'cat' in total_results or 'kitten' in total_results:
-						print "FOUND!"
 						db.session.add(Images(elem.xpath('url')[0].text, elem.xpath('id')[0].text, elem.xpath('source_url')[0].text, 0))
 						db.session.commit()
 				except:
