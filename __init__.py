@@ -22,7 +22,7 @@ def home():
 
 @app.route('/date/test', methods=['GET'])
 def datetest():
-	return str(datetime.datetime.now())
+	return str(datetime.datetime.now().hour)
 
 @app.route('/api/v0.1/message', methods=['GET'])
 def message():
