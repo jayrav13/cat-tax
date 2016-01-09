@@ -38,5 +38,5 @@ def send_message():
 
 dt = datetime.now()
 
-if dt.hour >= 9 and dt.hour <= 18:
+if dt.hour >= 9 and dt.hour <= 17:
 	send_message()
