@@ -6,6 +6,8 @@ import os
 from datetime import datetime
 from clarifai.client import ClarifaiApi
 
+db.create_all()
+
 def send_image():
 	image = Images.query.filter_by(is_sent=0).first()
 

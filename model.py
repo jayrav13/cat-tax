@@ -20,7 +20,7 @@ db.create_all()
 
 migrate = Migrate(app, db)
 manager = Manager(app)
-manager.add_command('cats', MigrateCommand)
+manager.add_command('imgur', MigrateCommand)
 
 class Users(db.Model):
 
@@ -39,16 +39,12 @@ class Images(db.Model):
 	__tablename__ = "images"
 
 	id = db.Column(db.Integer, primary_key=True)
-	url = db.Column(db.Text)
-	image_id = db.Column(db.Text)
-	source = db.Column(db.Text)
+	link = db.Column(db.Text)
 	is_sent = db.Column(db.Integer)
 
-	def __init__(self, url, image_id, source, is_sent):
-		self.url = url
-		self.image_id = image_id
-		self.source = source
-		self.is_sent = is_sent
+	def __init__(self, link):
+		self.link = link
+		self.is_sent = 0
 
 if __name__ == "__main__":
 	manager.run()
