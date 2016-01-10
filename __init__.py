@@ -38,13 +38,13 @@ def message():
 			db.session.commit()
 
 		resp = twilio.twiml.Response()
-		resp.message("Confirmed! Stay tuned for cat pics! Text \"pause\" to stop receiving Cat Tax images.")
+		resp.message("Confirmed! Stay tuned for dog and cat pics! Text \"pause\" to stop hearing from us :( .")
 		return str(resp)
 	elif request.values.get('Body', None).strip().lower() == 'pause':
 		user = Users.query.filter_by(number=request.values.get('From')).first()
 		if not user:
 			resp = twilio.twiml.Response()
-			resp.message("Hmm - you're not in our system! Want to receive cat pics? Reply with \"register\"")
+			resp.message("Hmm - you're not in our system! Want to sign up? Reply with \"register\"")
 			return str(resp)
 		else:
 			user.active = 0
