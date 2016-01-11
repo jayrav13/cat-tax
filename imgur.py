@@ -30,8 +30,11 @@ def send_message():
 	users = Users.query.filter_by(active=1).all()
 
 	for user in users:
-		client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID'), os.environ.get('TWILIO_AUTH_TOKEN'))
-		message  = client.messages.create(to=user.number, from_="+19733214779", media_url=[image.link])
+		try:
+			client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID'), os.environ.get('TWILIO_AUTH_TOKEN'))
+			message  = client.messages.create(to=user.number, from_="+19733214779", media_url=[image.link])
+		except:
+			pass
 		
 	image.is_sent = 1
 	db.session.commit()
